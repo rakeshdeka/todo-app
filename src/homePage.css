@@ -38,8 +38,29 @@ input {
     color: whitesmoke;
     border: 1px solid #7a377a;
     margin-bottom: 2px;
-    height: 40px;
-    width: 35%;
+    /* height: 40px; */
+    width: 50%;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
 
+}
+
+.realInput {
+    /* border: 1px solid red; */
+    /* background-color: #6cc7f6; */
+    text-align: center;
+
+}
+
+.rm-btn {
+    width: 30%;
+}
+
+.input-wrapper {
+    display: flex;
+    width: 70%;
+    height: 50%;
 }

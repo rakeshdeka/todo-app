@@ -8,7 +8,7 @@ export default function HomePage() {
         setNewValue(event.target.value);
     };
 
-    const handleAddValue = () => {
+    const handleAdd = () => {
         if (newValue !== "") {
             setValues([...values, newValue]);
             setNewValue("");
@@ -16,6 +16,14 @@ export default function HomePage() {
     };
     // console.log(values);
     // console.log(newValue);
+    // const handleRemove=()=>{
+
+    // }
+    const handleRemove = (index) => {
+        const newValues = [...values];
+        newValues.splice(index, 1);
+        setValues(newValues);
+    };
 
     return (
         <>
@@ -28,18 +36,25 @@ export default function HomePage() {
                     placeholder=" add new task..."
                 />
 
-                <button onClick={handleAddValue}>Add</button>
+                <button onClick={handleAdd}>Add</button>
             </div>
+
             <div className="inputBoxDiv">
 
                 {values.map((value, index) => (
-                    <p className="inputbox" key={index}>
-                        {value}
-                    </p>
+                    <div className="input-wrapper">
+                        <div key={index} className="inputbox">
+                            <div className="realInput">{value}</div>
+
+
+                        </div>
+                        <button className="rm-btn" onClick={() => handleRemove(index)}>re</button>
+                    </div>
 
                 ))}
 
             </div>
+
 
         </>
     );
