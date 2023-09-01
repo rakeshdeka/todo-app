@@ -24,11 +24,22 @@ input {
     height: 25px;
 }
 
+.inputBoxDiv {
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .inputbox {
+    text-align: center;
     color: whitesmoke;
     border: 1px solid #7a377a;
     margin-bottom: 2px;
-    height: 30px;
-    /* border-radius: 10px; */
+    height: 40px;
+    width: 35%;
+    border-radius: 5px;
 
 }

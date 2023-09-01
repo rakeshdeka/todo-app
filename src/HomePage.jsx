@@ -30,13 +30,17 @@ export default function HomePage() {
 
                 <button onClick={handleAddValue}>Add</button>
             </div>
-            <ul>
+            <div className="inputBoxDiv">
+
                 {values.map((value, index) => (
-                    <li className="inputbox" key={index}>
+                    <p className="inputbox" key={index}>
                         {value}
-                    </li>
+                    </p>
+
                 ))}
-            </ul>
+
+            </div>
+
         </>
     );
 }
