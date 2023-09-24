@@ -14,11 +14,6 @@ export default function HomePage() {
             setNewValue("");
         }
     };
-    // console.log(values);
-    // console.log(newValue);
-    // const handleRemove=()=>{
-
-    // }
     const handleRemove = (index) => {
         const newValues = [...values];
         newValues.splice(index, 1);
