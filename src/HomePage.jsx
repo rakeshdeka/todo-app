@@ -22,7 +22,7 @@ export default function HomePage() {
 
     return (
         <>
-            <h1 className="heading">TodoList App</h1>
+            <h1 className="bg-slate-300">TodoList App</h1>
             <div>
                 <input
                     type="text"
@@ -30,25 +30,31 @@ export default function HomePage() {
                     onChange={handleInputChange}
                     placeholder=" add new task..."
                 />
-
-                <button onClick={handleAdd}>Add</button>
             </div>
+            <button onClick={handleAdd}>Add</button>
+            <div class="flex bg-lightgray justify-around flex-grow-5">
+                <div class="border-black border sub-container w-1/2 h-96 overflow-auto p-10 font-bold">
+                    <div className="">
 
-            <div className="inputBoxDiv">
-
-                {values.map((value, index) => (
-                    <div className="input-wrapper">
-                        <div key={index} className="inputbox">
-                            <div className="realInput">{value}</div>
+                        {values.map((value, index) => (
+                            <div className="">
+                                <div key={index} className="">
+                                    <div className="">{value}</div>
 
 
-                        </div>
-                        <button className="rm-btn" onClick={() => handleRemove(index)}>re</button>
+                                </div>
+                                <button className="" onClick={() => handleRemove(index)}>remove</button>
+                            </div>
+
+                        ))}
+
                     </div>
-
-                ))}
-
+                </div>
+                <div class="sub-container w-1/2" id="right-container">
+                    {/* <!-- Drop some color on me --> */}
+                </div>
             </div>
+
 
 
         </>
