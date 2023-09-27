@@ -1,4 +1,4 @@
-import "./homePage.css";
+
 import { useState } from "react";
 export default function HomePage() {
     const [values, setValues] = useState([]);
@@ -22,36 +22,11 @@ export default function HomePage() {
 
     return (
         <>
-            <h1 className="bg-slate-300">TodoList App</h1>
-            <div>
-                <input
-                    type="text"
-                    value={newValue}
-                    onChange={handleInputChange}
-                    placeholder=" add new task..."
-                />
-            </div>
-            <button onClick={handleAdd}>Add</button>
-            <div class="flex bg-lightgray justify-around flex-grow-5">
-                <div class="border-black border sub-container w-1/2 h-96 overflow-auto p-10 font-bold">
-                    <div className="">
-
-                        {values.map((value, index) => (
-                            <div className="">
-                                <div key={index} className="">
-                                    <div className="">{value}</div>
-
-
-                                </div>
-                                <button className="" onClick={() => handleRemove(index)}>remove</button>
-                            </div>
-
-                        ))}
-
-                    </div>
-                </div>
-                <div class="sub-container w-1/2" id="right-container">
-                    {/* <!-- Drop some color on me --> */}
+            <div className="border h-[100vh] border-black bg-slate-400 flex flex-col justify-center items-center">
+                <h1 className="text-center">Todo List</h1>
+                <div className="border w-[95%] h-[95%] border-black flex justify-center items-center">
+                    <div className="border w-[50%] h-[95%] border-black "></div>
+                    <div className="border w-[50%] h-[95%] border-black"></div>
                 </div>
             </div>
 
