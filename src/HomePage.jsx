@@ -33,17 +33,17 @@ export default function HomePage() {
                 {/* header */}
                 <div className="flex justify-between border-b border-slate-300 bg-[#F0F0F0] h-[8%]">
                     <LuListTodo className="text-[#8282f7] max-w-400 w-8 h-8 ml-2 cursor-pointer mt-1" />
-                    <p className=" font-sans font-semibold underline underline-offset-2 decoration-[teal]">Todo List</p>
+                    {/* <p className=" font-sans font-semibold underline underline-offset-2 decoration-[teal]">Todo List</p> */}
                     <div className="flex mr-1 gap-2">
                         {/* <CgProfile className="w-8 h-8 mr-2 cursor-pointer " /> */}
                         {/* <img className=" cursor-pointer " src={hero} alt="hero" /> */}
                         <img
-                            className="inline-block h-10 w-10 rounded-full mt-1"
+                            className="inline-block h-10 w-10 rounded-full mt-1 cursor-pointer"
                             src="https://pbs.twimg.com/profile_images/1707600901932769280/oL5BxJOU_400x400.jpg"
                             alt="Dan_Abromov"
                         />
 
-                        <p className="border border-black block sticky h-[50%] top-0 mb-1 mt-2 bg-[black] text-white font-medium cursor-pointer pl-1 pr-1 rounded-lg">Logout</p>
+                        <p className="border border-black block sticky h-[50%] top-0 mb-1 mt-2 bg-[black] text-white font-medium cursor-pointer pl-1 pr-1 rounded-lg text-center hover:text-slate-300">Logout</p>
                     </div>
                 </div>
                 {/* //need div */}
@@ -78,7 +78,7 @@ export default function HomePage() {
                                                 <MdDelete className="hover:text-[red] mb-2 mt-2" onClick={() => handleRemove(index)} />
                                                 {/* <img src={rmIcon} alt="rmIcon" className=" mt-2 w-[30%] min-h-[30%] mb-4 mr-2 cursor-pointer" onClick={() => handleRemove(index)} /> */}
                                             </div>
-                                            <p className="block  max-w-[200px] align-top text-left p-1" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
+                                            <p className="block  max-w-[200px] align-top text-left p-1 cursor-move" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
                                                 {value}
                                             </p>
                                         </div>
