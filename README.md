@@ -1,4 +1,5 @@
 ### Preview of the App
-![Screenshot (454)](https://github.com/rakeshdeka/todo-app/assets/58238022/aac99d01-f90b-4e0f-aff1-1721939296e5)
+![5](https://github.com/rakeshdeka/todo-app/assets/58238022/68223f14-7416-4b92-a647-dfca546aed5b)
+
 ### Disclaimer
   - Many functionalities still need to be added; this is just an overview.
