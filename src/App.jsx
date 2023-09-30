@@ -1,4 +1,5 @@
 import HomePage from "./HomePage";
+import SignInModal from "./components/Authentication/SignInModal/SignInModal";
 
 function App() {
 
@@ -6,7 +7,8 @@ function App() {
   return (
     <>
       <div className="App">
-        <HomePage />
+        {/* <HomePage /> */}
+        <SignInModal />
       </div>
     </>
   )
