@@ -19,6 +19,14 @@ export default function HomePage() {
             setNewValue("");
         }
     };
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            console.log("added item");
+            setValues([...values, newValue]);
+            setNewValue("");
+        }
+
+    }
     const handleRemove = (index) => {
         const newValues = [...values];
         newValues.splice(index, 1);
@@ -38,7 +46,7 @@ export default function HomePage() {
                         {/* input box */}
                         <div className="flex gap-2">
                             <input className="w-[400px] p-2 rounded-md border border-gray-300 shadow-md outline-none  caret-[#FAAFA8]" type="text" value={newValue}
-                                onChange={handleInputChange} placeholder="Create new notes..."
+                                onChange={handleInputChange} onKeyDown={handleKeyPress} placeholder="Create new notes..."
                             />
                             <button className=" rounded-md border border-black text-sm font-semibold text-black px-2 hover:text-slate-600 shadow-lg" onClick={handleAdd}>Add</button>
                         </div>
