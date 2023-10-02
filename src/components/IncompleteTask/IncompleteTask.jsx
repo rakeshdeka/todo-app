@@ -3,12 +3,14 @@ import { MdDelete } from "react-icons/md"
 import { FaEdit } from "react-icons/fa"
 import Masonry from 'react-masonry-css'
 import "./custom.css"
+import { IoMdColorPalette } from "react-icons/io"
+import { FiMoreVertical } from "react-icons/fi"
 
 
 const IncompleteTask = ({ values, handleRemove }) => {
     const breakpoints = {
         default: 3,
-        1300: 2,
+        1100: 2,
         700: 1
     }
 
@@ -18,7 +20,8 @@ const IncompleteTask = ({ values, handleRemove }) => {
     return (
         <>
             <div className="border w-[50%] h-[95%] border-slate-300 self-end text-center overflow-auto">
-                <p className="border border-black inline-block p-1 sticky top-0 mb-1 bg-[#D3BFDB] shadow-2xl">Incomplete</p>
+                <p className="border border-black inline-block p-1 sticky top-0 mb-1 bg-[#faafa8] shadow-2xl">Incomplete</p>
+
                 <div className="">
                     <Masonry
                         breakpointCols={breakpoints}
@@ -28,17 +31,23 @@ const IncompleteTask = ({ values, handleRemove }) => {
 
 
                         {values.map((value, index) => (
-                            <div key={index} className=" mb-2 shadow-lg rounded-xl  overflow-auto cursor-pointer bg-[#E2F6D3] hover:bg-[#cffaab] w-full "
+                            <div key={index} className=" mb-2 shadow-lg rounded-xl  overflow-auto cursor-pointer bg-[#D3BFDB] hover:bg-[#dea4f5] w-full "
 
                             >
 
-                                <div className="flex justify-between border-b border-slate-300">
-                                    <FaEdit className="hover:text-[green] mb-2 mt-2 ml-1" />
-                                    <MdDelete className="hover:text-[red] mb-2 mt-2 mr-1" onClick={() => handleRemove(index)} />
-                                </div>
+
                                 <p className="block w-full text-start p-1 cursor-move" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
                                     {value}
                                 </p>
+                                <div className="flex justify-between border-t border-slate-300">
+                                    <FaEdit className="hover:text-[green] mb-1 mt-1 ml-1" />
+                                    <div className='flex'>
+                                        <MdDelete className="hover:text-[red] mb-2 mt-1 mr-1" onClick={() => handleRemove(index)} />
+                                        <IoMdColorPalette className="hover:text-[orange] mb-1 mt-1 ml-1" />
+                                        <FiMoreVertical className="hover:text-[blue] mb-1 mt-1 ml-1" />
+
+                                    </div>
+                                </div>
                             </div>
 
                         ))}

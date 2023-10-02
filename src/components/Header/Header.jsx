@@ -1,26 +1,23 @@
 import React, { useState } from 'react'
 import { LuListTodo } from "react-icons/lu"
 
+
 export const Header = () => {
     const [showToolTip, setShowToolTip] = useState();
 
 
 
     const toolTipOut = (e) => {
-        // console.log(`toolTipOut Logout ${e}`);
-        // e.target = "Logout"
-        // console.dir(e)
+
         setShowToolTip(false)
     }
     const toolTipOver = (e) => {
-        // console.log(`toolTipOver Logout ${e}`);
-        // e.target = "Logout"
-        // console.dir(e)
+
         setShowToolTip(true)
     }
     return (
         <>
-            <div className="flex justify-between border-b border-slate-300 bg-[#F0F0F0] h-[8%] drop-shadow-md">
+            <div className="flex justify-between border-b border-slate-300 bg-[#F0F0F0] h-[10%] drop-shadow-md">
                 <LuListTodo className="text-[#8282f7] max-w-400 w-8 h-8 ml-2 cursor-pointer mt-1" />
 
                 <div className="flex mr-1 gap-2">
