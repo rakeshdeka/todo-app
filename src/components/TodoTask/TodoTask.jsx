@@ -7,10 +7,10 @@ import { IoMdColorPalette } from "react-icons/io"
 import { FiMoreVertical } from "react-icons/fi"
 
 
-const IncompleteTask = ({ values, handleRemove }) => {
+const TodoTask = ({ values, handleRemove }) => {
     const breakpoints = {
-        default: 3,
-        1100: 2,
+        default: 2,
+        1100: 1,
         700: 1
     }
 
@@ -19,8 +19,8 @@ const IncompleteTask = ({ values, handleRemove }) => {
 
     return (
         <>
-            <div className="border w-[50%] h-[95%] border-slate-300 self-end text-center overflow-auto">
-                <p className="border border-black inline-block p-1 sticky top-0 mb-1 bg-[#faafa8] shadow-2xl">Incomplete</p>
+            <div className="border w-[33.33%] h-[100%] border-slate-300 self-end text-center overflow-auto">
+                <p className="border border-black inline-block p-1 sticky top-0 mb-1 bg-[#faafa8] shadow-2xl text-sm">Todos</p>
 
                 <div className="">
                     <Masonry
@@ -31,7 +31,7 @@ const IncompleteTask = ({ values, handleRemove }) => {
 
 
                         {values.map((value, index) => (
-                            <div key={index} className=" mb-2 shadow-lg rounded-xl  overflow-auto cursor-pointer bg-[#D3BFDB] hover:bg-[#dea4f5] w-full "
+                            <div key={index} className=" mb-2 shadow-lg rounded-3xl  overflow-auto cursor-pointer bg-[#D3BFDB] hover:bg-[#dea4f5] w-full "
 
                             >
 
@@ -58,4 +58,4 @@ const IncompleteTask = ({ values, handleRemove }) => {
     )
 }
 
-export default IncompleteTask
+export default TodoTask
