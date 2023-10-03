@@ -1,16 +1,19 @@
 import { useState } from "react";
 
-import IncompleteTask from "./components/IncompleteTask/IncompleteTask";
+import TodoTask from "./components/TodoTask/TodoTask";
 import CompleteTask from "./components/CompleteTask/CompleteTask";
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 import { GrFormAdd } from "react-icons/gr"
 import Filter from "./components/Filter/Filter";
+import InProgress from "./components/InProgress/InProgress";
 
 
 export default function HomePage() {
     const [values, setValues] = useState([]);
     const [newValue, setNewValue] = useState("");
+    const [title, setTitle] = useState({})
+
 
 
     const handleInputChange = (event) => {
@@ -36,6 +39,9 @@ export default function HomePage() {
         newValues.splice(index, 1);
         setValues(newValues);
     };
+    const handleTitle = () => {
+
+    }
 
     return (
         <>
@@ -46,29 +52,36 @@ export default function HomePage() {
                 {/* first container */}
                 <div className="h-[90%] bg-[#F0F0F0] flex flex-col justify-center items-center">
                     {/* second container */}
-                    <div className="w-[95%] h-[96%] flex flex-col justify-center items-center">
+                    <div className="w-[100%] h-[96%] flex flex-col justify-center items-center">
                         {/* input box */}
-                        <div className="flex rounded-lg bg-[#D4E4ED] shadow-md p-1 border mt-2 h-[8%]">
-                            <input className="w-[400px] bg-[#D4E4ED] rounded-l-lg outline-none caret-[#FAAFA8]" type="text" value={newValue}
-                                onChange={handleInputChange} onKeyDown={handleKeyPress} placeholder="Create new notes..."
+                        <div className="h-[30%] flex flex-col items-center">
+                            <div className="flex rounded-lg bg-[#D4E4ED] shadow-md p-1 border mt-2 min-h-[20%]">
+                                <div className="flex flex-col h-[70%]"> <input className="w-[400px] min-h-[40%] bg-[#D4E4ED] rounded-l-lg outline-none" type="text" value={newValue}
+                                    onChange={handleInputChange} onKeyDown={handleKeyPress} placeholder="title"
 
-                            />
+                                />
+                                    <textarea className="min-h-[80px] bg-[#D4E4ED] outline-none resize-none" placeholder="enter description" type="text" />
+                                </div>
 
-                            {/* <button className=" rounded-md border border-black text-sm font-semibold text-black px-2 hover:text-slate-600 shadow-lg" onClick={handleAdd}>Add</button> */}
-                            <GrFormAdd className="rounded-r-lg self-center bg-[#D4E4ED] h-[100%] w-8 cursor-pointer" onClick={handleAdd} />
+                                {/* <button className=" rounded-md border border-black text-sm font-semibold text-black px-2 hover:text-slate-600 shadow-lg" onClick={handleAdd}>Add</button> */}
+                                <GrFormAdd className="rounded-r-lg self-center bg-[#D4E4ED] h-[100%] w-8 cursor-pointer" onClick={handleAdd} />
 
 
-                        </div>
-                        <div className=" mt-1 h-[2%]">
-                            <Filter />
+                            </div>
+                            <div className=" mt-1">
+                                <Filter />
+                            </div>
                         </div>
 
 
                         {/* task card cotainer */}
-                        <div className=" w-[95%] h-[90%] flex justify-center items-center">
+                        <div className=" w-[95%] h-[80%] flex justify-center items-center">
                             {/* incomplete task */}
-                            <IncompleteTask values={values} handleRemove={handleRemove} />
+                            <TodoTask values={values} handleRemove={handleRemove} />
+                            {/* inprogress */}
+                            <InProgress />
                             {/* complete task */}
+
                             <CompleteTask />
                         </div>
 
