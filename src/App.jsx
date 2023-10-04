@@ -1,5 +1,6 @@
 import HomePage from "./HomePage";
 import SignInModal from "./components/Authentication/SignInModal/SignInModal";
+import { SignOutModal } from "./components/Authentication/SignOutModal/SignOutModal";
 
 function App() {
 
@@ -8,7 +9,8 @@ function App() {
     <>
       <div className="App">
         <HomePage />
-        {/* <SignInModal /> */}
+        {/* <SignInModal/> */}
+        {/* <SignOutModal /> */}
       </div>
     </>
   )
