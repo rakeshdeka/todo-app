@@ -5,7 +5,8 @@ import { BsGithub } from "react-icons/bs"
 export const SignOutModal = () => {
     return (
         <>
-            <div className='flex justify-center items-center w-full h-[100vh] bg-slate-300'>
+            <div className='fixed left-0 top-0 bottom-0 right-0 bg-[rgba(0,0,0,0.3)]'></div>
+            <div className=' fixed flex justify-center items-center w-full h-[100vh] bg-slate-300'>
                 <div className="mt-3 space-y-3 border border-black flex flex-col rounded-md shadow-xl w-[45%] h-[50%] bg-[#222E35] justify-center items-center">
                     <div className='border-b border-black w-full p-2 '>
                         <p className='text-center font-bold text-white px-3.5 py-2.5 text-xl'>rd.rakeshdeka@gmail.com🫰 </p>
