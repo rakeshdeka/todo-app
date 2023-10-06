@@ -30,7 +30,7 @@ export default function HomePage() {
             setNewValue("")
         }
     };
-    console.log(values);
+    // console.log(values);
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && newValue != []) {
             setValues([...values, { title: newTitle, note: newValue }])
@@ -48,9 +48,21 @@ export default function HomePage() {
 
         setVisibleTitle(true)
     }
+
+
     const closeTitle = () => {
         setVisibleTitle(!visibleTitle)
     }
+
+    // const iterator = values.keys();
+
+    // for (const key of iterator) {
+    //     console.log(key);
+    //     const value = values[key];
+    //     console.log(key, value);
+
+    // }
+    console.log(values);
 
 
     return (
@@ -61,6 +73,7 @@ export default function HomePage() {
                 {/* //need div */}
                 {/* first container */}
                 <div className="h-[90%] bg-[#F0F0F0] flex flex-col justify-center items-center">
+
                     {/* second container */}
                     <div className="w-[100%] h-[96%] flex flex-col justify-center items-center ">
                         {/* input box */}
@@ -73,11 +86,11 @@ export default function HomePage() {
                                 </div>
 
 
-                                {/* <button className=" rounded-md border border-black text-sm font-semibold text-black px-2 hover:text-slate-600 shadow-lg" onClick={handleAdd}>Add</button> */}
-                                <GrFormAdd className="rounded-r-lg self-center bg-[#F0F0F0] h-[100%] w-8 cursor-pointer" onClick={handleAdd} />
+                                {/* <button className="px-2 text-sm font-semibold text-black border border-black rounded-md shadow-lg hover:text-slate-600" onClick={handleAdd}>Add</button> */}
+                                <GrFormAdd className="rounded-r-lg self-center bg-[#F0F0F0] h-[100%] w-8 cursor-pointer" title="add note" onClick={handleAdd} />
 
                             </div>
-                            {/* <div className=" mt-1">
+                            {/* <div className="mt-1 ">
                                 <Filter />
                             </div> */}
                         </div>
