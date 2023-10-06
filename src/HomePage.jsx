@@ -7,13 +7,15 @@ import { Footer } from "./components/Footer/Footer";
 import { GrFormAdd } from "react-icons/gr"
 import Filter from "./components/Filter/Filter";
 import InProgress from "./components/InProgress/InProgress";
-
+import SignInModal from "./components/Authentication/SignInModal/SignInModal";
 
 export default function HomePage() {
     const [values, setValues] = useState([]);
     const [newValue, setNewValue] = useState("");
     const [visibleTitle, setVisibleTitle] = useState(false)
     const [newTitle, setNewTitle] = useState("")
+    const [openSignInModal, setOpenSignInModal] = useState(false)
+    const [showMoreModal, setShowMoreModal] = useState(false)
 
     const handleInputChange = (event) => {
         setNewValue(event.target.value);
@@ -53,15 +55,6 @@ export default function HomePage() {
     const closeTitle = () => {
         setVisibleTitle(!visibleTitle)
     }
-
-    // const iterator = values.keys();
-
-    // for (const key of iterator) {
-    //     console.log(key);
-    //     const value = values[key];
-    //     console.log(key, value);
-
-    // }
     console.log(values);
 
 
@@ -69,7 +62,8 @@ export default function HomePage() {
         <>
             <div className=" h-[100vh] w-[100wh]" >
                 {/* header */}
-                <Header />
+                <Header setOpenSignInModal={setOpenSignInModal} />
+                {openSignInModal && <SignInModal setOpenSignInModal={setOpenSignInModal} />}
                 {/* //need div */}
                 {/* first container */}
                 <div className="h-[90%] bg-[#F0F0F0] flex flex-col justify-center items-center">
@@ -84,15 +78,10 @@ export default function HomePage() {
                                     <textarea className=" bg-[#F0F0F0] w-[400px] outline-none resize-none  h-auto" type="text" placeholder="create a note" value={newValue}
                                         onChange={handleInputChange} onKeyDown={handleKeyPress} onClick={handleVisibility} onDoubleClick={closeTitle} />
                                 </div>
-
-
-                                {/* <button className="px-2 text-sm font-semibold text-black border border-black rounded-md shadow-lg hover:text-slate-600" onClick={handleAdd}>Add</button> */}
                                 <GrFormAdd className="rounded-r-lg self-center bg-[#F0F0F0] h-[100%] w-8 cursor-pointer" title="add note" onClick={handleAdd} />
 
                             </div>
-                            {/* <div className="mt-1 ">
-                                <Filter />
-                            </div> */}
+
                         </div>
 
 

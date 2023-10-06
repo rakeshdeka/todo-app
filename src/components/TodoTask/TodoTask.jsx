@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
 import { MdDelete } from "react-icons/md"
-import { FaEdit } from "react-icons/fa"
+// import { FaEdit } from "react-icons/fa"
 import Masonry from 'react-masonry-css'
 import "./custom.css"
 import { IoMdColorPalette } from "react-icons/io"
 import { FiMoreVertical } from "react-icons/fi"
-import { AiOutlineCheckCircle } from "react-icons/ai"
+// import { AiOutlineCheckCircle } from "react-icons/ai"
 import { BiSolidImageAdd } from "react-icons/bi"
 
 
+
 const TodoTask = ({ values, handleRemove, handleAdd }) => {
-    const [iseditable, setIsEditable] = useState(false)
-    const [isIconVisible, setIsIconVisible] = useState(true)
+    const [isEditable, setIsEditable] = useState(false)
     const [isMouseOver, setIsMouseOver] = useState(false)
+    const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
+
+
 
     const breakpoints = {
         default: 2,
@@ -20,41 +23,23 @@ const TodoTask = ({ values, handleRemove, handleAdd }) => {
         700: 1
     }
 
-
+    const handleHoverIconOver = (index) => {
+        setIsMouseOver(true)
+        setHoveredCardIndex(index);
+    }
 
     const handelHoverIconOut = () => {
-
-
-
         setIsMouseOver(false)
-
-
     }
-
-    // const iterator = values.keys();
-
-    // for (const key of iterator) {
-    //     console.log(key);
-    //     const value = values[key];
-    //     console.log(key, value);
-
-    // }
-    const handleHoverIconOver = (index) => {
-
-        setIsMouseOver(true)
-
-
-    }
-
     const handleEditNote = (index) => {
 
         setIsEditable(true);
-    }
+        setHoveredCardIndex(index);
 
-    const handleToggleIcon = () => {
-        //altering state
-        setIsIconVisible(!isIconVisible)
     }
+    console.log(hoveredCardIndex);
+
+
 
 
 
@@ -73,31 +58,52 @@ const TodoTask = ({ values, handleRemove, handleAdd }) => {
 
 
                         {values.map((value, index) => (
-                            <div key={index} className=" mb-2 shadow-lg rounded-md  overflow-auto cursor-pointer bg-[#D3BFDB] hover:bg-[#dea4f5] w-full  "
+                            <div key={index} className=" mb-2 shadow-lg rounded-lg  overflow-auto cursor-pointer bg-[#D3BFDB] hover:bg-[#dea4f5] w-full  "
                                 onMouseOut={() => handelHoverIconOut(index)} onMouseOver={() => handleHoverIconOver(index)}
 
                             >
 
                                 <div className='flex'>
 
-                                    <p className="block w-full p-2 text-xl font-bold truncate text-start rounded-t-md cursor-text focus:outline-none" onClick={handleToggleIcon} contentEditable={iseditable} tabIndex="0" spellCheck="true" aria-multiline="true" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
+                                    <p className={`block w-full p-2 text-xl font-bold truncate text-start rounded-t-md cursor-text focus:outline-none 
+                                    ${isEditable && hoveredCardIndex === index ? 'editable' : ''}`}
+                                        contentEditable={isEditable && hoveredCardIndex === index} // Make title editable
+                                        suppressContentEditableWarning={true} // Suppress React warning
+
+
+                                        tabIndex="0"
+                                        spellCheck="true"
+                                        aria-multiline="true"
+                                        style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}
+                                    >
                                         {value.title}
                                     </p>
 
                                 </div>
 
-                                <p className='pl-2 text-start focus:outline-none cursor-' onClick={() => { handleEditNote(index); handleToggleIcon(); }} contentEditable={iseditable} tabIndex="0" spellCheck="true" aria-multiline="true" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>{value.note}</p>
+                                <p className={`pl-2 text-start focus:outline-none cursor-text
+                                 ${isEditable && hoveredCardIndex === index ? 'editable' : ''}`}
+                                    contentEditable={isEditable && hoveredCardIndex === index} // Make title editable
+                                    suppressContentEditableWarning={true} // Suppress React warning
+                                    onClick={() => { handleEditNote(index); }}
+
+                                    // contentEditable={iseditable}
+                                    tabIndex="0" spellCheck="true"
+                                    aria-multiline="true"
+                                    style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
+                                    {value.note}
+                                </p>
 
 
-                                <div className="flex justify-between w-full h-6 cursor-text">
-                                    <div className='flex'>
+                                <div className="flex justify-end w-full h-6 cursor-text">
+                                    {/* {isEditable && hoveredCardIndex === index && <div className='flex'>
 
-                                        {/* <FaEdit className="hover:text-[red] mb-1 mt-1 ml-1" onClick={() => {  handleToggleIcon(); }} /> */}
-                                        {isIconVisible && <AiOutlineCheckCircle className="hover:text-[green] mt-1 cursor-pointer" title='add changes' onClick={() => { handleToggleIcon(); handleAdd(); }} />
-                                        }
-                                    </div>
 
-                                    {isMouseOver && <div className='flex'>
+                                        <AiOutlineCheckCircle className="hover:text-[green] mt-1 cursor-pointer" title='add changes' onClick={() => { handleAdd(index); }} />
+
+                                    </div>} */}
+
+                                    {isMouseOver && hoveredCardIndex === index && <div className='flex gap-2'>
 
                                         <MdDelete className="hover:text-[red] mt-1 cursor-pointer" title="delete" onClick={() => handleRemove(index)} />
 
@@ -107,6 +113,7 @@ const TodoTask = ({ values, handleRemove, handleAdd }) => {
 
 
                                     </div>}
+
 
 
                                 </div>
