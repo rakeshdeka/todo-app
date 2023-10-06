@@ -20,15 +20,34 @@ const TodoTask = ({ values, handleRemove, handleAdd }) => {
         700: 1
     }
 
-    const handelHoverIconOut = (index) => {
+
+
+    const handelHoverIconOut = () => {
+
+
+
         setIsMouseOver(false)
+
+
     }
+
+    // const iterator = values.keys();
+
+    // for (const key of iterator) {
+    //     console.log(key);
+    //     const value = values[key];
+    //     console.log(key, value);
+
+    // }
     const handleHoverIconOver = (index) => {
 
         setIsMouseOver(true)
+
+
     }
 
     const handleEditNote = (index) => {
+
         setIsEditable(true);
     }
 
@@ -55,38 +74,39 @@ const TodoTask = ({ values, handleRemove, handleAdd }) => {
 
                         {values.map((value, index) => (
                             <div key={index} className=" mb-2 shadow-lg rounded-md  overflow-auto cursor-pointer bg-[#D3BFDB] hover:bg-[#dea4f5] w-full  "
-                                onMouseOut={handelHoverIconOut} onMouseOver={handleHoverIconOver}
+                                onMouseOut={() => handelHoverIconOut(index)} onMouseOver={() => handleHoverIconOver(index)}
+
                             >
 
                                 <div className='flex'>
 
-                                    <p className="block w-full text-xl font-bold text-start p-2 rounded-t-md cursor-text truncate focus:outline-none" onClick={handleToggleIcon} contentEditable={iseditable} tabIndex="0" spellCheck="true" aria-multiline="true" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
+                                    <p className="block w-full p-2 text-xl font-bold truncate text-start rounded-t-md cursor-text focus:outline-none" onClick={handleToggleIcon} contentEditable={iseditable} tabIndex="0" spellCheck="true" aria-multiline="true" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
                                         {value.title}
                                     </p>
 
                                 </div>
 
-                                <p className='text-start pl-2  focus:outline-none cursor-text' onClick={() => { handleEditNote(); handleToggleIcon(); }} contentEditable={iseditable} tabIndex="0" spellCheck="true" aria-multiline="true" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>{value.note}</p>
+                                <p className='pl-2 text-start focus:outline-none cursor-' onClick={() => { handleEditNote(index); handleToggleIcon(); }} contentEditable={iseditable} tabIndex="0" spellCheck="true" aria-multiline="true" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>{value.note}</p>
 
 
-                                <div className="flex justify-between w-full h-6">
+                                <div className="flex justify-between w-full h-6 cursor-text">
                                     <div className='flex'>
 
                                         {/* <FaEdit className="hover:text-[red] mb-1 mt-1 ml-1" onClick={() => {  handleToggleIcon(); }} /> */}
-                                        {isIconVisible && <AiOutlineCheckCircle className="hover:text-[green] mt-1" onClick={() => { handleToggleIcon(); handleAdd(); }} />
+                                        {isIconVisible && <AiOutlineCheckCircle className="hover:text-[green] mt-1 cursor-pointer" title='add changes' onClick={() => { handleToggleIcon(); handleAdd(); }} />
                                         }
                                     </div>
 
-                                    <div className='flex'>
+                                    {isMouseOver && <div className='flex'>
 
-                                        {isMouseOver && <MdDelete className="hover:text-[red] mt-1 " onClick={() => handleRemove(index)} />}
+                                        <MdDelete className="hover:text-[red] mt-1 cursor-pointer" title="delete" onClick={() => handleRemove(index)} />
 
-                                        {isMouseOver && <BiSolidImageAdd className="hover:text-[lavender] mt-1" />}
-                                        {isMouseOver && <IoMdColorPalette className="hover:text-[orange] mt-1 " />}
-                                        {isMouseOver && <FiMoreVertical className="hover:text-[blue] mt-1" />}
+                                        <BiSolidImageAdd className="hover:text-[lavender] mt-1 cursor-pointer" title='add image' />
+                                        <IoMdColorPalette className="hover:text-[orange] mt-1 cursor-pointer" title='add color' />
+                                        <FiMoreVertical className="hover:text-[blue] mt-1 cursor-pointer" title='more' />
 
 
-                                    </div>
+                                    </div>}
 
 
                                 </div>
