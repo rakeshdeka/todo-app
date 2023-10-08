@@ -15,7 +15,8 @@ export default function HomePage() {
     const [visibleTitle, setVisibleTitle] = useState(false)
     const [newTitle, setNewTitle] = useState("")
     const [openSignInModal, setOpenSignInModal] = useState(false)
-    const [showMoreModal, setShowMoreModal] = useState(false)
+    // const [showMoreModal, setShowMoreModal] = useState(false)
+    const [editIndex, setEditIndex] = useState("");
 
     const handleInputChange = (event) => {
         setNewValue(event.target.value);
