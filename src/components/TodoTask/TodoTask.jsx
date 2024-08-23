@@ -1,131 +1,106 @@
-import React, { useState } from 'react'
-import { MdDelete } from "react-icons/md"
-// import { FaEdit } from "react-icons/fa"
-import Masonry from 'react-masonry-css'
-import "./custom.css"
-import { IoMdColorPalette } from "react-icons/io"
-import { FiMoreVertical } from "react-icons/fi"
-// import { AiOutlineCheckCircle } from "react-icons/ai"
-import { BiSolidImageAdd } from "react-icons/bi"
+import React, { useState } from "react";
+import { MdDelete } from "react-icons/md";
+import { IoMdColorPalette } from "react-icons/io";
+import { FiMoreVertical } from "react-icons/fi";
+import { BiSolidImageAdd } from "react-icons/bi";
+import { useTodoContext } from "../../API/Context/todoContext";
+// import UpdateTodoModal from "./UpdateTodoModal";
+import UpdateTodoModal from "../Modal/UpdateTodoModal";
 
+const TodoTask = ({ values }) => {
+  const [isMouseOver, setIsMouseOver] = useState(false);
+  const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState(null);
+  const { deleteTodo, fetchTodos } = useTodoContext();
 
+  const handleHoverIconOver = (index) => {
+    setIsMouseOver(true);
+    setHoveredCardIndex(index);
+  };
 
-const TodoTask = ({ values, handleRemove, handleAdd }) => {
-    const [isEditable, setIsEditable] = useState(false)
-    const [isMouseOver, setIsMouseOver] = useState(false)
-    const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
+  const handleHoverIconOut = () => {
+    setIsMouseOver(false);
+  };
 
-
-
-    const breakpoints = {
-        default: 2,
-        1100: 1,
-        700: 1
+  const handleDelete = async (id) => {
+    try {
+      await deleteTodo(id);
+      fetchTodos();
+    } catch (error) {
+      console.error("Failed to delete todo:", error);
     }
+  };
 
-    const handleHoverIconOver = (index) => {
-        setIsMouseOver(true)
-        setHoveredCardIndex(index);
-    }
+  const handleUpdate = (todo) => {
+    setSelectedTodo(todo);
+    setIsModalOpen(true);
+  };
 
-    const handelHoverIconOut = () => {
-        setIsMouseOver(false)
-    }
-    const handleEditNote = (index) => {
+  return (
+    <>
+      <div className="border w-full h-full self-end text-center overflow-auto p-4">
+        <div className="grid grid-cols-5 gap-2">
+          {values?.map((value, index) => (
+            <div
+              key={index}
+              className="mb-4 shadow-lg rounded-lg min-h-44 max-w-60 bg-gray-800 hover:bg-gray-900 text-white flex flex-col justify-between"
+              onMouseOut={() => handleHoverIconOut(index)}
+              onMouseOver={() => handleHoverIconOver(index)}
+            >
+              <div className="p-4 flex flex-col gap-2">
+                <p
+                  className="text-start focus:outline-none cursor-text break-words text-xl font-semibold"
+                  tabIndex="0"
+                  spellCheck="true"
+                  aria-multiline="true"
+                >
+                  {value.title}
+                </p>
+                <p
+                  className="text-start focus:outline-none cursor-text break-words text-base"
+                  tabIndex="0"
+                  spellCheck="true"
+                  aria-multiline="true"
+                >
+                  {value.description}
+                </p>
+              </div>
 
-        setIsEditable(true);
-        setHoveredCardIndex(index);
+              {isMouseOver && hoveredCardIndex === index && (
+                <div className="flex gap-4 justify-end p-4 bg-gray-700 rounded-b-lg">
+                  <MdDelete
+                    className="hover:text-red-500 cursor-pointer"
+                    title="Delete"
+                    onClick={() => handleDelete(value._id)}
+                  />
+                  <BiSolidImageAdd
+                    className="hover:text-purple-300 cursor-pointer"
+                    title="Add Image"
+                  />
+                  <IoMdColorPalette
+                    className="hover:text-orange-400 cursor-pointer"
+                    title="Add Color"
+                  />
+                  <FiMoreVertical
+                    className="hover:text-blue-400 cursor-pointer"
+                    title="More"
+                    onClick={() => handleUpdate(value)}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
 
-    }
-    console.log(hoveredCardIndex);
+      <UpdateTodoModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        todo={selectedTodo}
+      />
+    </>
+  );
+};
 
-
-
-
-
-
-    return (
-        <>
-            <div className="border w-[33.33%] h-[100%] border-slate-300 self-end text-center overflow-auto">
-                <p className="border border-black inline-block p-1 sticky top-0 mb-1 bg-[#faafa8] shadow-2xl text-sm">Todos</p>
-
-                <div className="">
-                    <Masonry
-                        breakpointCols={breakpoints}
-                        className="my-masonry-grid"
-                        columnClassName="my-masonry-grid_column"
-                    >
-
-
-                        {values.map((value, index) => (
-                            <div key={index} className=" mb-2 shadow-lg rounded-lg  overflow-auto cursor-pointer bg-[#D3BFDB] hover:bg-[#dea4f5] w-full  "
-                                onMouseOut={() => handelHoverIconOut(index)} onMouseOver={() => handleHoverIconOver(index)}
-
-                            >
-
-                                <div className='flex'>
-
-                                    <p className={`block w-full p-2 text-xl font-bold truncate text-start rounded-t-md cursor-text focus:outline-none 
-                                    ${isEditable && hoveredCardIndex === index ? 'editable' : ''}`}
-                                        contentEditable={isEditable && hoveredCardIndex === index} // Make title editable
-                                        suppressContentEditableWarning={true} // Suppress React warning
-
-
-                                        tabIndex="0"
-                                        spellCheck="true"
-                                        aria-multiline="true"
-                                        style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}
-                                    >
-                                        {value.title}
-                                    </p>
-
-                                </div>
-
-                                <p className={`pl-2 text-start focus:outline-none cursor-text
-                                 ${isEditable && hoveredCardIndex === index ? 'editable' : ''}`}
-                                    contentEditable={isEditable && hoveredCardIndex === index} // Make title editable
-                                    suppressContentEditableWarning={true} // Suppress React warning
-                                    onClick={() => { handleEditNote(index); }}
-
-                                    // contentEditable={iseditable}
-                                    tabIndex="0" spellCheck="true"
-                                    aria-multiline="true"
-                                    style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
-                                    {value.note}
-                                </p>
-
-
-                                <div className="flex justify-end w-full h-6 cursor-text">
-                                    {/* {isEditable && hoveredCardIndex === index && <div className='flex'>
-
-
-                                        <AiOutlineCheckCircle className="hover:text-[green] mt-1 cursor-pointer" title='add changes' onClick={() => { handleAdd(index); }} />
-
-                                    </div>} */}
-
-                                    {isMouseOver && hoveredCardIndex === index && <div className='flex gap-2'>
-
-                                        <MdDelete className="hover:text-[red] mt-1 cursor-pointer" title="delete" onClick={() => handleRemove(index)} />
-
-                                        <BiSolidImageAdd className="hover:text-[lavender] mt-1 cursor-pointer" title='add image' />
-                                        <IoMdColorPalette className="hover:text-[orange] mt-1 cursor-pointer" title='add color' />
-                                        <FiMoreVertical className="hover:text-[blue] mt-1 cursor-pointer" title='more' />
-
-
-                                    </div>}
-
-
-
-                                </div>
-                            </div>
-
-
-                        ))}
-                    </Masonry>
-                </div >
-            </div >
-        </>
-    )
-}
-
-export default TodoTask
+export default TodoTask;

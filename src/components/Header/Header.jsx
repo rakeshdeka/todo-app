@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import { LuListTodo } from "react-icons/lu"
-
+import React, { useState } from "react";
+import { LuListTodo } from "react-icons/lu";
 
 export const Header = ({ setOpenSignInModal }) => {
-
-    return (
-        <>
-            <div className="flex justify-between border-b border-slate-300 bg-[#F0F0F0] h-[10%] drop-shadow-md">
-                <LuListTodo className="text-[#8282f7] max-w-400 w-8 h-8 ml-2 cursor-pointer mt-1" />
-
+  return (
+    <>
+      <div className="border-b flex justify-center items-center border-slate-300 bg-[#F0F0F0] h-[10%] drop-shadow-md">
+       
+        <p className=" text-2xl font-bold"> TODO <span className=" text-red-500">APP</span> </p>
+        {/* 
                 <div className="flex h-8 mt-2 mr-1 bg-slate-600">
                     <button
                         type="button"
@@ -22,9 +21,8 @@ export const Header = ({ setOpenSignInModal }) => {
                         Signin
                     </button>
 
-                </div>
-            </div>
-
-        </>
-    )
-}
+                </div> */}
+      </div>
+    </>
+  );
+};

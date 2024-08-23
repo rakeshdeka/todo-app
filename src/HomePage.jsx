@@ -1,111 +1,85 @@
 import { useState } from "react";
-
 import TodoTask from "./components/TodoTask/TodoTask";
-import CompleteTask from "./components/CompleteTask/CompleteTask";
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
-import { GrFormAdd } from "react-icons/gr"
-import Filter from "./components/Filter/Filter";
-import InProgress from "./components/InProgress/InProgress";
+import { GrFormAdd } from "react-icons/gr";
 import SignInModal from "./components/Authentication/SignInModal/SignInModal";
+import { useTodoContext } from "./API/Context/todoContext";
 
 export default function HomePage() {
-    const [values, setValues] = useState([]);
-    const [newValue, setNewValue] = useState("");
-    const [visibleTitle, setVisibleTitle] = useState(false)
-    const [newTitle, setNewTitle] = useState("")
-    const [openSignInModal, setOpenSignInModal] = useState(false)
-    // const [showMoreModal, setShowMoreModal] = useState(false)
-    const [editIndex, setEditIndex] = useState("");
+  const { todos, createTodo } = useTodoContext();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [openSignInModal, setOpenSignInModal] = useState(false);
+  console.log("todos......", todos);
+  
 
-    const handleInputChange = (event) => {
-        setNewValue(event.target.value);
-    };
-    const handleTitleChange = (event) => {
-        setNewTitle(event.target.value)
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleAddTodo = async () => {
+    if (title.trim() === "") return; // Prevent empty titles from being created
+
+    try {
+      await createTodo(title, description); // Pass both title and description
+      setTitle(""); // Clear title input after adding
+      setDescription(""); // Clear description input after adding
+    } catch (error) {
+      console.error("Failed to create todo:", error);
     }
+  };
 
-    const handleAdd = () => {
-
-        if (newValue !== "" && newTitle !== "") {
-            setValues([...values, { title: newTitle, note: newValue }])
-            setNewTitle("")
-            setNewValue("")
-        }
-    };
-    // console.log(values);
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && newValue != []) {
-            setValues([...values, { title: newTitle, note: newValue }])
-            setNewTitle("")
-            setNewValue("")
-        }
-    }
-
-    const handleRemove = (index) => {
-        const newValues = [...values];
-        newValues.splice(index, 1);
-        setValues(newValues);
-    };
-    const handleVisibility = () => {
-
-        setVisibleTitle(true)
-    }
-
-
-    const closeTitle = () => {
-        setVisibleTitle(!visibleTitle)
-    }
-    console.log(values);
-
-
-    return (
-        <>
-            <div className=" h-[100vh] w-[100wh]" >
-                {/* header */}
-                <Header setOpenSignInModal={setOpenSignInModal} />
-                {openSignInModal && <SignInModal setOpenSignInModal={setOpenSignInModal} />}
-                {/* //need div */}
-                {/* first container */}
-                <div className="h-[90%] bg-[#F0F0F0] flex flex-col justify-center items-center">
-
-                    {/* second container */}
-                    <div className="w-[100%] h-[96%] flex flex-col justify-center items-center ">
-                        {/* input box */}
-                        <div className="h-[20%] flex flex-col items-center w-full ">
-                            <div className="flex rounded-lg bg-[#F0F0F0] shadow-xl p-1  border mt-2 min-h-[20%]">
-                                <div className="flex flex-col h-[70%]">
-                                    {visibleTitle && <input className="w-[400px] min-h-[40%] bg-[#F0F0F0] rounded-l-lg outline-none" type="text" placeholder="title" onChange={handleTitleChange} value={newTitle} onKeyDown={handleKeyPress} />}
-                                    <textarea className=" bg-[#F0F0F0] w-[400px] outline-none resize-none  h-auto" type="text" placeholder="create a note" value={newValue}
-                                        onChange={handleInputChange} onKeyDown={handleKeyPress} onClick={handleVisibility} onDoubleClick={closeTitle} />
-                                </div>
-                                <GrFormAdd className="rounded-r-lg self-center bg-[#F0F0F0] h-[100%] w-8 cursor-pointer" title="add note" onClick={handleAdd} />
-
-                            </div>
-
-                        </div>
-
-
-                        {/* task card cotainer */}
-                        <div className=" w-[95%] h-[80%] flex justify-center items-center">
-                            {/* incomplete task */}
-                            <TodoTask values={values} handleRemove={handleRemove} handleAdd={handleAdd} />
-                            {/* inprogress */}
-                            <InProgress />
-                            {/* complete task */}
-
-                            <CompleteTask />
-                        </div>
-
-                    </div>
-                    {/* <Footer /> */}
-                </div>
+  return (
+    <>
+      <div className="h-[100vh] w-[100vw] bg-slate-200">
+        {/* header */}
+        <Header setOpenSignInModal={setOpenSignInModal} />
+        {openSignInModal && (
+          <SignInModal setOpenSignInModal={setOpenSignInModal} />
+        )}
+        {/* first container */}
+        <div className="h-[90%] flex flex-col justify-center items-center">
+          {/* second container */}
+          <div className="w-[100%] h-[96%] flex flex-col justify-center items-center">
+            {/* input box */}
+            <div className="flex flex-col items-center w-full h-[25%]">
+              <div className="flex flex-col rounded-lg bg-white shadow-xl p-2 border mt-2 min-h-[25%] w-[420px]">
+                <input
+                  className="bg-transparent w-full outline-none p-2 text-gray-700 placeholder-gray-500 border-b"
+                  type="text"
+                  placeholder="Title"
+                  value={title}
+                  onChange={handleTitleChange}
+                />
+                <textarea
+                  className="bg-transparent w-full outline-none resize-none h-auto p-2 text-gray-700 placeholder-gray-500 mt-2"
+                  type="text"
+                  placeholder="Description"
+                  value={description}
+                  onChange={handleDescriptionChange}
+                />
+                <GrFormAdd
+                  className="self-center text-gray-500 hover:text-blue-500 transition-colors duration-200 h-8 w-8 cursor-pointer mt-2"
+                  title="Add note"
+                  onClick={handleAddTodo} // Call handleAddTodo when clicked
+                />
+              </div>
             </div>
-        </>
 
-
-
-
-    );
-
+            {/* task card container */}
+            <div className="w-[95%] h-[70%] flex justify-center items-center">
+              {/* incomplete task */}
+              <TodoTask values={todos} />
+            </div>
+          </div>
+          {/* <Footer /> */}
+        </div>
+      </div>
+    </>
+  );
 }
