@@ -1,17 +1,15 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import TodoTask from "./components/TodoTask/TodoTask";
 import { Header } from "./components/Header/Header";
-import { Footer } from "./components/Footer/Footer";
-import { GrFormAdd } from "react-icons/gr";
-import SignInModal from "./components/Authentication/SignInModal/SignInModal";
 import { useTodoContext } from "./API/Context/todoContext";
 
 export default function HomePage() {
   const { todos, createTodo } = useTodoContext();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [openSignInModal, setOpenSignInModal] = useState(false);
-  console.log("todos......", todos);
+  const [showTitleInput, setShowTitleInput] = useState(false);
+  const inputContainerRef = useRef(null); // Reference to the container of the inputs
+  const descriptionRef = useRef(null); // Reference to the description input
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -19,69 +17,93 @@ export default function HomePage() {
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
+    if (!showTitleInput) {
+      setShowTitleInput(true);
+    }
   };
 
   const handleAddTodo = async () => {
-    if (title.trim() === "") return; // Prevent empty titles from being created
+    if (title.trim() === "" || description.trim() === "") return;
 
     try {
-      await createTodo(title, description); // Pass both title and description
-      setTitle(""); // Clear title input after adding
-      setDescription(""); // Clear description input after adding
+      await createTodo(title, description);
+      setTitle("");
+      setDescription("");
+      setShowTitleInput(false);
     } catch (error) {
       console.error("Failed to create todo:", error);
     }
   };
 
-  return (
-    <>
-      <div className="h-[100vh] w-[100vw] bg-slate-200">
-        {/* header */}
-        <Header setOpenSignInModal={setOpenSignInModal} />
-        {openSignInModal && (
-          <SignInModal setOpenSignInModal={setOpenSignInModal} />
-        )}
-        {/* first container */}
-        <div className="h-[90%] flex flex-col justify-center items-center">
-          {/* second container */}
-          <div className="w-[100%] h-[96%] flex flex-col justify-center items-center">
-            {/* input box */}
-            <div className="flex flex-col items-center w-full h-[25%]">
-              <div className="flex flex-col rounded-lg bg-white shadow-xl p-2 border mt-2 min-h-[25%] w-[420px]">
-                <input
-                  className="bg-transparent w-full outline-none p-2 text-gray-700 placeholder-gray-500 border-b"
-                  type="text"
-                  placeholder="Title"
-                  value={title}
-                  onChange={handleTitleChange}
-                />
-                <textarea
-                  className="bg-transparent w-full outline-none resize-none h-auto p-2 text-gray-700 placeholder-gray-500 mt-2"
-                  type="text"
-                  placeholder="Description"
-                  value={description}
-                  onChange={handleDescriptionChange}
-                />
-                <GrFormAdd
-                  className="self-center text-gray-500 hover:text-blue-500 transition-colors duration-200 h-8 w-8 cursor-pointer mt-2"
-                  title="Add note"
-                  onClick={handleAddTodo} // Call handleAddTodo when clicked
-                />
-              </div>
-            </div>
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleAddTodo();
+    }
+  };
 
-            {/* task card container */}
-            <div className="w-[95%] h-[70%] flex justify-center items-center">
-              {todos.length === 0 ? (
-                <p className="text-gray-600">No tasks available. Add a task to get started!</p>
-              ) : (
-                <TodoTask values={todos} />
-              )}
-            </div>
-          </div>
-          {/* <Footer /> */}
+  const handleClickOutside = (event) => {
+    if (
+      inputContainerRef.current &&
+      !inputContainerRef.current.contains(event.target)
+    ) {
+      setShowTitleInput(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Keep focus on the description input when title input is shown
+    if (showTitleInput && descriptionRef.current) {
+      descriptionRef.current.focus();
+    }
+  }, [showTitleInput]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
+      <Header />
+      <div className="flex flex-col items-center pt-8 pb-4">
+        <div
+          className="bg-white shadow-lg rounded-lg p-4 w-full max-w-md"
+          ref={inputContainerRef}
+        >
+            {showTitleInput && (
+            <input
+              className="w-full p-3 text-sm border-b border-gray-300 focus:outline-none focus:border-blue-500"
+              type="text"
+              placeholder="Enter task title..."
+              value={title}
+              onChange={handleTitleChange}
+              onKeyPress={handleKeyPress}
+            />
+          )}
+          <textarea
+            className="w-full p-3 mb-4 text-sms border-b border-gray-300 focus:outline-none focus:border-blue-500 resize-none"
+            placeholder="Enter task description..."
+            value={description}
+            onChange={handleDescriptionChange}
+            onFocus={() => setShowTitleInput(true)}
+            onKeyPress={handleKeyPress}
+            ref={descriptionRef}
+          />
+        
+        </div>
+
+        <div className="mt-8 w-full">
+          {todos.length === 0 ? (
+            <p className="text-center text-gray-600">
+              No tasks available. Add a task to get started!
+            </p>
+          ) : (
+            <TodoTask values={todos} />
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

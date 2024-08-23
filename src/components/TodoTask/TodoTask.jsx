@@ -78,10 +78,10 @@ const TodoTask = ({ values }) => {
                     className="hover:text-purple-300 cursor-pointer"
                     title="Add Image"
                   />
-                  <IoMdColorPalette
+                  {/* <IoMdColorPalette
                     className="hover:text-orange-400 cursor-pointer"
                     title="Add Color"
-                  />
+                  /> */}
                   <FiMoreVertical
                     className="hover:text-blue-400 cursor-pointer"
                     title="More"
