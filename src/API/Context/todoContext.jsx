@@ -52,7 +52,7 @@ export const TodoProvider = ({ children }) => {
     try {
       const response = await API.put(`/todos/${todoId}`, updatedData);
       console.log("res", response);
-      
+
       setTodos(
         todos.map((todo) => (todo.id === todoId ? response.data.data : todo))
       );

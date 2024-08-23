@@ -12,7 +12,6 @@ export default function HomePage() {
   const [description, setDescription] = useState("");
   const [openSignInModal, setOpenSignInModal] = useState(false);
   console.log("todos......", todos);
-  
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -73,8 +72,11 @@ export default function HomePage() {
 
             {/* task card container */}
             <div className="w-[95%] h-[70%] flex justify-center items-center">
-              {/* incomplete task */}
-              <TodoTask values={todos} />
+              {todos.length === 0 ? (
+                <p className="text-gray-600">No tasks available. Add a task to get started!</p>
+              ) : (
+                <TodoTask values={todos} />
+              )}
             </div>
           </div>
           {/* <Footer /> */}
