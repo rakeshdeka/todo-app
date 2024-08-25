@@ -10,6 +10,8 @@ export default function HomePage() {
   const [showTitleInput, setShowTitleInput] = useState(false);
   const inputContainerRef = useRef(null); // Reference to the container of the inputs
   const descriptionRef = useRef(null); // Reference to the description input
+  console.log("todos:-------", todos);
+  
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -74,7 +76,7 @@ export default function HomePage() {
         >
             {showTitleInput && (
             <input
-              className="w-full p-3 text-sm border-b border-gray-300 focus:outline-none focus:border-blue-500"
+              className="w-full p-1 text-sm border-b border-gray-300 focus:outline-none focus:border-blue-500"
               type="text"
               placeholder="Enter task title..."
               value={title}
@@ -83,7 +85,7 @@ export default function HomePage() {
             />
           )}
           <textarea
-            className="w-full p-3 mb-4 text-sms border-b border-gray-300 focus:outline-none focus:border-blue-500 resize-none"
+            className="w-full text-sm p-1 border-b border-gray-300 focus:outline-none focus:border-blue-500 resize-none"
             placeholder="Enter task description..."
             value={description}
             onChange={handleDescriptionChange}
@@ -96,7 +98,7 @@ export default function HomePage() {
 
         <div className="mt-8 w-full">
           {todos.length === 0 ? (
-            <p className="text-center text-gray-600">
+            <p className="text-center text-xs text-gray-600">
               No tasks available. Add a task to get started!
             </p>
           ) : (

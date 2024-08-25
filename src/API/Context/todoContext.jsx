@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import API from "../config"; // Assuming API is an Axios instance configured with the base URL
+import API from "../config"; 
 
 const TodoContext = createContext();
 
